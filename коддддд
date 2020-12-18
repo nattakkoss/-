@@ -1,0 +1,63 @@
+ #include <iostream>
+using namespace std;
+int main() 
+{
+                int por;
+		         cout <<"Введите порядок матрицы: ";
+		         cin>> por;
+		         int  Arr[por][por],i, j, k=0,k1,p=0, max, max1, chislo;//k1 является  максимальным числом для рандомных чисел в матрице
+		         for (int i = 0; i < por; i++)
+                 {
+                 for (int j = 0; j < por; j++)
+                  {
+                   Arr[i][j] =1 + rand() % 100 ;
+                  }
+                 }  
+         cout << "Матрица до манипуляций: \n";
+           for (int i = 0; i < por; i++)
+           {
+            for (int j = 0; j <por; j++)
+            {
+            cout.width(3);
+            cout <<Arr[i][j]<<" ";
+            }
+           cout <<"\n";
+          }
+       max = Arr[0][0];
+        for (i = 0; i < por; i++)
+        for (j = 0; j < por; j++)
+            if (Arr[i][j] > max)
+            {
+                max = Arr[i][j];
+                k = i; p = j;
+            }
+        while (i == 0 && j == 0) 
+        {
+            for (i = i; i > 0; i--)
+                for (j = j; j > 0; j--)
+                    if (i != 0 && j != 0) {
+                        max1 = Arr[i][j];
+                        Arr[i][j] = Arr[i - 1][j - 1];
+                        Arr[i - 1][j - 1] = max1;
+                    }
+                    else
+                        if (i == 0) {
+ 
+                            max1 = Arr[i][j];
+                            Arr[i][j] = Arr[i][j - 1];
+                            Arr[i][j - 1] = max1;
+                        }
+            if (j == 0) {
+                max1 = Arr[i][j];
+               Arr[i][j] = Arr[i - 1][j];
+                Arr[i - 1][j] = max1;
+            }
+ 
+            for (int i = 0; i < por; i++)
+                for (int j = 0; j < por; j++)
+                    cout << Arr[i][j] << "\t";
+ 
+            cout << "\n";
+        }
+        return 0;
+}
