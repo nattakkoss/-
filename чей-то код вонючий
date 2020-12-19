@@ -1,0 +1,307 @@
+#include <iostream>
+#include <thread>
+#include <windows.h>
+#include <cstring>
+#include <iomanip>
+#include <stdio.h>
+
+using namespace std;
+
+void quicksort(int *uno, int end, int begin) //Сортировка массива
+{
+    int mid;
+    int f = begin;
+    int e = end;
+    mid = uno[(f + e) / 2];
+    while (f < e)
+    {
+        while (uno[f] < mid) f++;
+        while (uno[e] > mid) e--;
+        if (f <= e)
+        {
+            swap(uno[f], uno[e]);
+            f++;
+            e--;
+            //cout << uno;
+        }
+    }
+    if (begin < e) quicksort(uno, e, begin);
+    if (f < end) quicksort(uno, end, f);
+}
+
+int main()
+{
+
+    HANDLE hCon;                     // Задал имя консоли который будет использовать в дальнейшем
+    COORD cPos;                       // Задал координаты X и Y. Тип Short - целочисленный знаковый тип
+
+    hCon = GetStdHandle(STD_OUTPUT_HANDLE); //    получение хэндла консоли? Надо же что-то в SetConsoleCursorPosition параметром подсовывать...
+    cPos.Y = 0;     // Задает координаты для Y
+    cPos.X = 0;     // Задает координаты для X
+
+
+    setlocale(LC_ALL, "Russian");
+    cout << "\t матрица " << endl;
+    srand(time(0));
+
+    const int N = 10;
+    const int sr = 10;
+
+
+    int mass[N][N];
+    int Y0 = 5;
+    int Y1 = 6;
+    int A = 0;
+    int m = 0;
+    int x = 0;
+    int imax = N;
+    int jmax = N;
+    int imid = 5;
+    int jmid = 5;
+    int imin = 0;
+    int jmin = 0;
+    int *quart1[sr];
+    int *quart2[sr];
+    int *quart3[sr];
+    int *quart4[sr];
+    int *ptr[N];
+    int uno[N*N];
+    int arr[N][N];
+    for (int i = 0; i < 10; i++)               //генерируем массив и массив указателей
+        ptr[i] = mass[i];
+    cout << endl;
+    ////////////////////////////////////////////////////////////////////
+    cout << "\t вывод змейки " << endl;
+    Sleep(300);
+    for (int i = 0; i < 10; i++) //строки
+    {
+        int z = 0;
+        z = i % 2;
+        if (z == 0)
+            for (int j = 0; j < 10; j++) //столбцы
+
+            {
+                Sleep(50);
+                cPos.Y = j + 1 + Y0;     // Задает координаты для Y
+                cPos.X = i * 3;
+                SetConsoleCursorPosition(hCon, cPos);
+                ptr[i][j] = rand() % 100;
+                cout << setw(2) << ptr[i][j] << " ";
+            }
+        else
+            for (int j = 9; j > -1; j--)
+            {
+                Sleep(50);
+                cPos.Y = j + Y1;     // Задает координаты для Y
+                cPos.X = i * 3;
+                SetConsoleCursorPosition(hCon, cPos);
+                ptr[i][j] = rand() % 100;
+                cout << setw(2) << ptr[i][j] << " ";
+            }
+        cout << endl;
+    }
+    /////////////////////////////////////
+
+    for (int i = 0; i < imid; i++)               //генерируем массив и массив указателей первая четверть
+    {
+        quart1[i] = mass[i];
+        for (int j = 0; j < jmid; j++)
+        {
+            quart1[j] = mass[j];
+        }
+    }
+
+    for (int i = 0; i < imid; i++)               //генерируем массив и массив указателей вторая четверть
+    {
+        quart2[i] = mass[i];
+        for (int j = jmid; j < jmax; j++)
+        {
+            quart2[j] = mass[j];
+        }
+    }
+
+    for (int i = imid; i < imax; i++)               //генерируем массив и массив указателей третья четверть
+    {
+        quart3[i] = mass[i];
+        for (int j = 0; j < jmid; j++)
+        {
+            quart3[j] = mass[j];
+        }
+    }
+
+    for (int i = imid; i < imax; i++)               //генерируем массив и массив указателей чётвёртая четверть
+    {
+        quart4[i] = mass[i];
+        for (int j = jmid; j < jmax; j++)
+        {
+            quart4[j] = mass[j];
+        }
+    }
+    ///////////////////////////////////////////////// 
+    cout << endl;
+
+    for (int i = 0; i < imid; i++)               //генерируем массив и массив указателей
+    {
+        for (int j = 0; j < jmid; j++)
+        {
+            Sleep(10);
+            cPos.Y = j + jmid * 3 + 5 + Y0;
+            cPos.X = i * 8 + imid;
+            SetConsoleCursorPosition(hCon, cPos);
+            arr[i][j] = quart2[i][j + jmid];                      //заполняем первую четверть нового массива 
+            
+        }
+    }
+    for (int i = 0; i < imid; i++)               //генерируем массив и массив указателей
+    {
+        for (int j = jmid; j < jmax; j++)
+        {
+            Sleep(10);
+            cPos.Y = j + jmid * 3 + 5 + Y0;
+            cPos.X = i * 8 + imid;
+            SetConsoleCursorPosition(hCon, cPos);
+            arr[i][j] = quart4[i + imid][j];                      //заполняем вторую четверть нового массива 
+            
+        }
+    }
+    for (int i = imid; i < imax; i++)               //генерируем массив и массив указателей 
+    {
+        for (int j = 0; j < jmid; j++)
+        {
+            Sleep(10);
+            cPos.Y = j + jmid * 3 + 5 + Y0;
+            cPos.X = i * 8 + imid * 2;
+            SetConsoleCursorPosition(hCon, cPos);
+            arr[i][j] = quart1[i - imid][j];                      //заполняем третью четверть нового массива 
+            
+        }
+    }
+    for (int i = imid; i < imax; i++)               //генерируем массив и массив указателей
+    {
+        for (int j = jmid; j < jmax; j++)
+        {
+            Sleep(10);
+            cPos.Y = j + jmid * 3 + 5 + Y0;
+            cPos.X = i * 8 + imid * 2;
+            SetConsoleCursorPosition(hCon, cPos);
+            arr[i][j] = quart3[i][j - jmid];                      //заполняем четвёртая четверть нового массива 
+            
+        }
+    }
+
+    cout << endl;
+    cout << "Перестроенный массив a)";
+
+    for (int i = 0; i < imax; i++)               //генерируем массив и массив указателей
+    {
+        for (int j = 0; j < jmax; j++)
+        {
+            cout << setw(2) << arr[j][i] << " "; //выводим новый массив
+        }
+        cout << endl;
+    }
+
+    ////////////////////////////////////////////////////////////////
+
+    int k = 0;
+    for (int i = 0; i < N; i++)
+    {
+        for (int j = 0; j < N; j++)
+        {
+            uno[k] = arr[j][i];                              //////////////// превращаем двумерный массив в одномерный
+            cout << uno[k] << " ";
+            k++;
+        }
+    }
+    cout << endl;
+
+    int end = 99, begin = 0;
+    cout << endl;
+    quicksort(uno, end, begin);          //сортировка массива
+
+    cout << endl << "massive " << endl;
+    k = 0;
+    for (int i = 0; i < N; i++)
+    {
+        for (int j = 0; j < N; j++)
+        {
+            arr[i][j] = uno[k];
+            cout << arr[i][j] << " ";
+            k++;
+        }
+        cout << endl;
+    }
+    cout << endl;
+
+label0:
+    cout << "1. Прибавить к числам массива " << endl;
+    cout << "2. Вычисть из чисел масива " << endl;
+    cout << "3. Умножить числа масива " << endl;
+    cout << "4. Разделить числа масива " << endl;
+    cout << "5. выход " << endl;
+    cin >> m;
+    switch (m)
+    {
+    case 1:
+        cout << "Введи число на которое увеличатся все члены массива " << endl;
+        cin >> x;
+        for (int i = 0; i < N; i++)
+        {
+            for (int j = 0; j < N; j++)
+            {
+                arr[i][j] = arr[i][j] + x;
+                cout << arr[i][j] << " ";
+
+            }
+            cout << endl;
+        }
+        cout << endl;
+        goto label0;
+    case 2:
+        cout << "Введи число на которое уменьшаться все члены массива " << endl;
+        cin >> x;
+        for (int i = 0; i < N; i++)
+        {
+            for (int j = 0; j < N; j++)
+            {
+                arr[i][j] = arr[i][j] - x;
+                cout << arr[i][j] << " ";
+            }
+            cout << endl;
+        }
+        cout << endl;
+        goto label0;
+    case 3:
+        cout << "Введи число на которое умножаться все члены массива " << endl;
+        cin >> x;
+        for (int i = 0; i < N; i++)
+        {
+            for (int j = 0; j < N; j++)
+            {
+                arr[i][j] = arr[i][j] * x;
+                cout << arr[i][j] << " ";
+            }
+            cout << endl;
+        }
+        cout << endl;
+        goto label0;
+    case 4:
+        cout << "Введи число на которое разделятся все члены массива " << endl;
+        cin >> x;
+        for (int i = 0; i < N; i++)
+        {
+            for (int j = 0; j < N; j++)
+            {
+                arr[i][j] = arr[i][j] / x;
+                cout << arr[i][j] << " ";
+            }
+            cout << endl;
+        }
+        cout << endl;
+        goto label0;
+    case 5:
+        return 0;
+    }
+
+    getchar;
+}
