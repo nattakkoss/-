@@ -1,0 +1,180 @@
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <cstdio> 
+#include <cstdlib> 
+#include <chrono>
+using namespace std;
+
+int main()
+{
+    int task_lab1;
+    int  task;
+    do {
+
+        cout << "Номер лаб.работы: \n";
+        cout << "(1) Первая работа\n";
+        cout << "(2) Вторая работа\n";
+        cout << "(3) Третья работа\n";
+        cout << "(4) Четвертая работа\n";
+        cout << "(0) Exit\n";
+        cout << ">>> ";
+        cin >> task;
+        cout << "\n\n";
+
+        switch (task)
+        {
+        case 1:
+            if (task == 1) // work 1 
+            {
+    
+
+                do
+                {
+                    cout << "Введите номер задания: \n\n";
+                    cout << "1.Вывести, сколько памяти (в байтах) на вашем компьютере отводится под различные типы данных.\n\n";
+                    cout << "2.Вывести на экран двоичное представление в памяти (все разряды) целого числа.\n\n";
+                    cout << "3.Вывести на экран двоичное представление в памяти (все разряды) типа float.\n\n";
+                    cout << "4.Вывести на экран двоичное представление в памяти (все разряды) типа double.\n\n";
+                    cout << "5.Exit\n";
+                    cout << ">>>:  ";
+
+                    cin >> task_lab1;
+                    switch (task_lab1)
+                    {
+                    case 1:
+                       {
+                        cout<<"int: "<<sizeof(int)<<"\n";
+                        cout<<"short int: "<<sizeof(short int)<<"\n";
+                        cout<<"long int: "<<sizeof(long int)<<"\n";
+                        cout<<"float: "<<sizeof(float)<<"\n";
+                        cout<<"double: "<<sizeof(double)<<"\n";
+                        cout<<"long double: "<<sizeof(long double)<<"\n";
+                        cout<<"char: "<<sizeof(char)<<"\n";
+                        cout<<"bool: "<<sizeof(bool)<<"\n";
+                        break;
+                       }
+                    case 2:
+
+                    {
+                    int h;
+                    unsigned int mask = 1 << 31;
+                    cout << "Вывод на экран двоичного представления в памяти целого числа , Введите число: ";
+                    cin >> h;//Вводим целое число
+                    cout << " Результат: ";
+                    for (int i = 0; i <= 31; i++)
+                       {
+                        if (i == 1)
+                         {
+                          cout << " ";
+                         }
+                      putchar(h & mask ? '1' : '0');//если 1, то возвращается 1, иначе 0
+                      mask >>= 1;// побитовый сдвиг вправо на 1 бит
+                     }
+                    cout << "\n";
+                        break;
+                    }
+                    case 3:
+                        cout<<",sc,cls";
+                        break;
+
+                    case 4:
+
+                     cout<<",sc,cls";
+                      break;
+                   
+                    case 0:
+                    break;
+                    }
+
+                } while (task_lab1 != 0);
+            }
+            break;
+
+        case 2:
+            if (task == 2) // work 2
+            {
+                int task2;
+                const int N=100;
+                int arr[N];
+                int minInUnsorted;
+                int maxInUnsorted;
+                do
+                {
+                    cout << "Введите задание:\n";
+                    cout << "1.Создать целочисленный массив размерности N = 100.\n";
+                    cout << "2.Отсортировать заданный в пункте 1 элементы от меньшего к большему. Определить время, затраченное на сортировку,\n";
+                    cout << "3.Найти максимальный и минимальный элемент массива. Подсчитайте время поиска этих элементов в отсортированном массиве\n";
+                    cout << "4.Вывести среднее значение  максимального и минимального значения\n";
+                    cout << "5.Вывести количество элементов в отсортированном массиве, которые меньше числа a\n";
+                    cout << "6.Вывести количество элементов в отсортированном массиве, которые больше числа b\n";
+                    cout << "7.Вывести информацию о том, есть ли введенное пользователем число в отсортированном массиве\n";
+                    cout << "8.Поменять местами элементы массива\n";
+                    cout << "9.Exit\n";
+                    cout << "\n";
+
+                    cout << ">>> ";
+                    cin >> task2;
+
+                    switch (task2)
+                    {
+
+                    case 1:
+                    {
+                        for (int i = 0; i < 100; i++)
+                        {
+                        arr[i] = rand() % 199 - 99;//Заполняем массив рандомными числами
+                        }
+                     cout<< " Элементы массива, с которыми мы будем дальше работать: ";
+                      for (int i = 0; i < 100; i++)
+                        {
+                          cout <<  arr[i] << "  ";
+                        }
+                     cout<< endl;
+                    break;
+                    }
+                    case 2:
+
+                        cout<<",sc,cls";
+                        break;
+
+                    case 3:
+                       cout<<",sc,cls";
+                        break;
+
+                    case 4:
+ 
+                     cout<<",sc,cls";
+                        break;
+
+                    case 5:
+                      cout<<",sc,cls";
+                        break;
+
+                    case 6:
+                         cout<<",sc,cls";
+                        break;
+
+                    case 7:
+                         cout<<",sc,cls";
+                        break;
+                    }
+
+                } while (task2 != 9);
+
+            }
+
+            break;
+
+        case 3:
+        cout <<"kmskmd";
+                        break;
+
+                    
+        case 4:
+          cout <<"kcmkmcdk";
+          break;
+       }
+
+   }   while (task != 5);  
+}
